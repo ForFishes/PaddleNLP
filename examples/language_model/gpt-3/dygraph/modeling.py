@@ -837,7 +837,8 @@ class GPTPretrainingCriterion(paddle.nn.Layer):
         else:
             masked_lm_loss = self.loss_func(prediction_scores,
                                             masked_lm_labels.unsqueeze(2))
-
+  
+        masked_lm_loss = masked_lm_loss.cast(dtype="float32")
         loss_mask = loss_mask.reshape([-1])
         masked_lm_loss = paddle.sum(masked_lm_loss.reshape([-1]) * loss_mask)
         loss = masked_lm_loss / loss_mask.sum()

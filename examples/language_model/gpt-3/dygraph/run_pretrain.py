@@ -198,12 +198,13 @@ def do_train(args):
 
 
     if args.use_pure_fp16:
-        scaler = paddle.amp.GradScaler(init_loss_scaling=args.scale_loss)
-        scaler = fleet.distributed_scaler(scaler)
         model, optimizer = paddle.amp.decorator(models=model, 
                                                 optimizers=optimizer, 
                                                 mode='L2', 
                                                 save_dtype='float32')
+        scaler = paddle.amp.GradScaler(init_loss_scaling=args.scale_loss)
+        scaler = fleet.distributed_scaler(scaler)
+
 
     if paddle.distributed.get_world_size() > 1:
         model = fleet.distributed_model(model)
@@ -257,7 +258,7 @@ def do_train(args):
                                 "reduce_sum", "c_softmax_with_cross_entropy","elementwise_div"
                             ], mode='L2'):
                         preds = model(tokens)
-                        loss = criterion(preds, labels, loss_mask)
+                    loss = criterion(preds, labels, loss_mask)
 
                     if args.use_pure_fp16:
                         scaler.scale(loss).backward()
