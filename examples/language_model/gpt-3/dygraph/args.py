@@ -128,7 +128,7 @@ def parse_args(MODEL_CLASSES):
                         type=float,
                         help="Grad clip for the parameter.")
     parser.add_argument("--max_lr",
-                        default=1e-4,
+                        default=5e-5,
                         type=float,
                         help="The initial max learning rate for Adam.")
     parser.add_argument("--min_lr",
@@ -266,17 +266,17 @@ def parse_args(MODEL_CLASSES):
 
     parser.add_argument("--hidden_dropout_prob",
                         type=float,
-                        default=0.1,
+                        default=0.,
                         help="The hidden dropout prob.")
     parser.add_argument("--attention_probs_dropout_prob",
                         type=float,
-                        default=0.1,
+                        default=0.,
                         help="The attention probs dropout prob.")
 
     # Other config
     parser.add_argument("--seed",
                         type=int,
-                        default=1234,
+                        default=1024,
                         help="Random seed for initialization")
     parser.add_argument("--check_accuracy",
                         type=str2bool,

@@ -544,6 +544,10 @@ class GPTEmbeddings(nn.Layer):
         position_embeddings = self.position_embeddings(position_ids)
         embeddings = input_embedings + position_embeddings
 
+        #print("input_ids", input_ids)
+        #print("embeddings", embeddings)
+        #print("embedding_weight", self.word_embeddings.weight)
+
         #with get_rng_state_tracker().rng_state('global_seed'):
         embeddings = self.dropout(embeddings)
 
@@ -698,13 +702,13 @@ class GPTPretrainedModel(PretrainedModel):
         },
         "gpt2-small-en": { # config for CE
             "vocab_size": 50304,
-            "hidden_size": 1024,
-            "num_hidden_layers": 4,
-            "num_attention_heads": 4,
-            "intermediate_size": 4096,
+            "hidden_size": 2048,
+            "num_hidden_layers": 24,
+            "num_attention_heads": 8,
+            "intermediate_size": 8192,
             "hidden_act": "gelu",
-            "hidden_dropout_prob": 0.1,
-            "attention_probs_dropout_prob": 0.1,
+            "hidden_dropout_prob": 0,
+            "attention_probs_dropout_prob": 0,
             "max_position_embeddings": 1024,
             "type_vocab_size": 1,  # no use
             "initializer_range": 0.02,

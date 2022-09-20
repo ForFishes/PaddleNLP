@@ -1642,7 +1642,8 @@ class ErniePretrainingCriterion(paddle.nn.Layer):
             Its data type should be float32 and its shape is [1].
 
         """
-
+        print("prediction_scores", "masked_lm_labels", "=============")
+        print(prediction_scores, masked_lm_labels)
         with paddle.static.amp.fp16_guard():
             masked_lm_loss = F.cross_entropy(prediction_scores,
                                              masked_lm_labels,

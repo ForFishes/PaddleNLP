@@ -217,6 +217,7 @@ def do_train(args):
     if args.lr_decay_style == "none":
         lr_scheduler = None
     elif args.lr_decay_style == "cosine":
+        # print("msg:", args.max_lr, args.min_lr, warmup_step, args.decay_steps)
         lr_scheduler = lr.CosineAnnealingWithWarmupDecay(
             max_lr=args.max_lr,
             min_lr=args.min_lr,
@@ -293,6 +294,13 @@ def do_train(args):
             logger.warning("No optimizer checkpoint file found in %s." %
                            opt_path)
 
+    # for p in model.parameters():
+    #     print(p.name, p.shape)
+
+    paddle.save(
+        model.state_dict(),
+        os.path.join("./output",
+                     "model_state_mp_{:0>2d}.pdopt".format(mp_rank)))
     global_step = 0
     tic_train = time.time()
     for epoch in range(args.num_train_epochs):

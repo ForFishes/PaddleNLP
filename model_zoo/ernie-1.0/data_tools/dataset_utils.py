@@ -611,6 +611,7 @@ def build_train_valid_test_datasets(data_prefix,
                                     max_seq_length_dec=None,
                                     dataset_type='standard_bert'):
 
+    print(">>data_prefix", data_prefix)
     if len(data_prefix) == 1:
         return _build_train_valid_test_datasets(data_prefix[0],
                                                 args,
@@ -687,6 +688,7 @@ def _build_train_valid_test_datasets(data_prefix,
                                      max_seq_length_dec,
                                      dataset_type='standard_bert'):
 
+    print(">>", dataset_type)
     if dataset_type not in DSET_TYPES:
         raise ValueError("Invalid dataset_type: ", dataset_type)
 
@@ -757,6 +759,8 @@ def _build_train_valid_test_datasets(data_prefix,
                                       binary_head=binary_head,
                                       **kwargs)
             elif dataset_type == DSET_TYPE_ERNIE:
+                print("masked_lm_prob", masked_lm_prob, "short_seq_prob",
+                      short_seq_prob, "binary_head", binary_head)
                 dataset = ErnieDataset(indexed_dataset=indexed_dataset,
                                        tokenizer=tokenizer,
                                        masked_lm_prob=masked_lm_prob,

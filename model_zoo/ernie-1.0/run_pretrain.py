@@ -537,6 +537,12 @@ def do_train(args):
 
             input_ids, segment_ids, input_mask, masked_lm_positions, \
             masked_lm_labels, next_sentence_labels = batch
+            # print("input_ids",input_ids.shape,input_ids)
+            # print("segment_ids", segment_ids.shape,segment_ids)
+            # print("input_mask", input_mask.shape,input_mask)
+            # print("masked_lm_positions", masked_lm_positions.shape,masked_lm_positions)
+            # print("masked_lm_labels",masked_lm_labels.shape, masked_lm_labels)
+            # print("next_sentence_labels", next_sentence_labels.shape,next_sentence_labels)
 
             ctx_manager = contextlib.nullcontext() if sys.version_info >= (
                 3, 7) else contextlib.suppress()
@@ -568,6 +574,8 @@ def do_train(args):
                             position_ids=None,
                             attention_mask=input_mask,
                             masked_positions=masked_lm_positions)
+
+                        # print(">>>",prediction_scores,seq_relationship_score )
                         lm_loss, sop_loss = criterion(prediction_scores,
                                                       seq_relationship_score,
                                                       masked_lm_labels,
